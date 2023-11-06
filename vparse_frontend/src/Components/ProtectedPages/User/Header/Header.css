@@ -1,0 +1,11 @@
+.header-container {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  height: 50px;
+}
+
+.header-center {
+  display: flex;
+  gap: 3px;
+}

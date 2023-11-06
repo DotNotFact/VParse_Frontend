@@ -1,0 +1,147 @@
+:root {
+  --black-color: #000;
+  --black-hover-color: #1a1a1a;
+  --gray-color: #cfd1d3;
+  --gray-hover-color: #333333;
+  --gray-white-color: #e1e3e6;
+  --white-color: #fff;
+  --blue-color: #71aaeb;
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+}
+
+p {
+  color: var(--black-color);
+  font: 500 1.2rem monospace;
+}
+
+label {
+  color: var(--gray-hover-color);
+  font: 500 1.1rem monospace;
+}
+
+a {
+  transition: all 0.1s ease-in;
+  font: 500 1.2rem monospace;
+  color: var(--black-color);
+  justify-content: center;
+  text-decoration: none;
+  align-items: center;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  padding: 10px;
+}
+
+a:active {
+  background: var(--gray-color);
+}
+
+button {
+  background-color: transparent;
+  transition: all 0.1s ease-in;
+  font: 500 1.2rem monospace;
+  color: var(--black-color);
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  padding: 10px;
+}
+
+button:active {
+  background: var(--gray-color);
+}
+
+picture,
+svg,
+img {
+  max-width: 100%;
+  display: block;
+  height: 1.7rem;
+  width: 1.7rem;
+}
+
+input {
+  font: 500 1rem monospace;
+}
+
+select {
+  font: 500 1.1rem monospace;
+}
+
+option {
+  font: 500 1rem monospace;
+}
+
+hr {
+  background-color: #b1b1b1b1;
+  display: block;
+  clear: both;
+  height: 1px;
+  width: 100%;
+  border: 0;
+}
+
+ul,
+ol {
+  list-style: none !important;
+}
+
+html {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow-x: hidden;
+  font-size: 16px;
+}
+
+html::-webkit-scrollbar {
+  width: 0px;
+}
+
+body {
+  color: var(--black-color);
+  -webkit-user-select: none;
+  font: 600 1rem monospace;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  background: #fff;
+  user-select: none;
+}
+
+html,
+body {
+  overflow: hidden;
+  height: 100dvh;
+  width: 100dvw;
+  min-height: 100%;
+  min-width: 100%;
+}
+
+#root {
+  grid-template-rows: auto 1fr;
+  position: relative;
+  display: grid;
+  height: 100%;
+}
+
+.maxWidth {
+  width: 100%;
+}
+
+.p-1 {
+  padding: 1rem;
+}
+
+.p-2 {
+  padding: 2rem;
+}

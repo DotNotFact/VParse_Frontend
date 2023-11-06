@@ -1,0 +1,81 @@
+﻿.donateInfo-wrapper {
+  overflow-y: scroll;
+}
+
+.donateInfo-container {
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+}
+
+.donateInfo-container > p {
+  margin-bottom: 25px;
+  font-size: 1.5rem;
+}
+
+.donateInfo-cards {
+  margin-bottom: 10px;
+  height: 100%;
+  width: 100%;
+}
+
+.donateInfo-card {
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
+  flex-direction: column;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  display: flex;
+  padding: 10px;
+  height: 240px;
+  width: 100%;
+}
+
+.donateInfo-card > hr {
+  margin: 10px 0;
+}
+
+.donateInfo-card-top {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  width: 100%;
+}
+
+.donateInfo-card-top > p {
+  font-size: 1.5rem;
+}
+
+.donateInfo-card-top > svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.donateInfo-card-center {
+  flex-direction: column;
+  display: flex;
+  height: 100%;
+  gap: 5px;
+}
+
+.donateInfo-card-center > label {
+  margin: 0 10px;
+}
+
+.donateInfo-card-bottom {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  margin: 10px;
+}
+
+.donateInfo-card-bottom > p {
+  font-size: 1.5rem;
+}
+
+.donateInfo-card-bottom > a {
+  background: var(--gray-white-color);
+}
+.donateInfo-card-bottom > a:active {
+  background: var(--blue-color);
+}

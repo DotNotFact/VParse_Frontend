@@ -1,0 +1,10 @@
+﻿.addDonate-container {
+  flex-direction: column;
+  display: flex;
+  gap: 10px;
+}
+
+.addDonate-container button {
+  background: var(--gray-white-color);
+  width: 100%;
+}

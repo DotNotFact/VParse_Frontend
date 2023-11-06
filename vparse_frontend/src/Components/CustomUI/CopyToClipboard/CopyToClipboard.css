@@ -1,0 +1,23 @@
+#CopyToClipboard {
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+#CopyToClipboard > input[type="text"] {
+  text-align: center;
+  width: 200px;
+}
+
+#CopyToClipboard > button {
+  background-color: var(--gray-color);
+  width: 200px;
+}
+
+#CopyToClipboard > button:active {
+  background-color: var(--blue-color);
+  color: var(--white-color);
+}
