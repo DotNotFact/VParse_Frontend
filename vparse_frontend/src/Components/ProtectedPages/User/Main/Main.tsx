@@ -52,7 +52,7 @@ export const Main = ({ users, isLoading, isSuccess }: any) => {
               <div className="main-top">
                 <img
                   loading="lazy"
-                  src={users[currentIndex].imageUrl}
+                  src={users[currentIndex]?.imageUrl}
                   alt="UserPhoto"
                 />
                 <div className="p-1 main-info">
