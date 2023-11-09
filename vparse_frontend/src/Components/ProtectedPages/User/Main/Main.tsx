@@ -48,7 +48,7 @@ export const Main = ({ users, isLoading, isSuccess }: any) => {
           <Loader load={true} />
         ) : (
           isSuccess &&
-          users.length > 0 && (
+          users && (
             <>
               <div className="main-top">
                 <img
