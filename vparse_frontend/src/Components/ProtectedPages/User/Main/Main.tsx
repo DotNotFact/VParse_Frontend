@@ -7,7 +7,6 @@ import "./Main.css";
 interface IMainProps {
   users: IPersonData[];
   isLoading: boolean;
-  isSuccess: boolean;
 }
 
 interface IPersonData {
@@ -17,7 +16,7 @@ interface IPersonData {
   lastName: string;
 }
 
-export const Main = ({ users, isLoading, isSuccess }: IMainProps) => {
+export const Main = ({ users, isLoading }: IMainProps) => {
   const token = localStorage.getItem("token") as string;
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
@@ -47,7 +46,7 @@ export const Main = ({ users, isLoading, isSuccess }: IMainProps) => {
         {isLoading ? (
           <Loader load={isLoading} />
         ) : (
-          isSuccess && (
+          users && (
             <>
               <div className="main-top">
                 <img
