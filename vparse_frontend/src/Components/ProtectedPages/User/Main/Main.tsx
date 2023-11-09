@@ -4,9 +4,22 @@ import { Loader } from "../../../CustomUI/Loader/Loader";
 import { useState } from "react";
 import "./Main.css";
 
-export const Main = ({ users, isLoading, isSuccess }: any) => {
+interface IMainProps {
+  users: IPersonData[];
+  isLoading: boolean;
+  isSuccess: boolean;
+}
+
+interface IPersonData {
+  id: string;
+  imageUrl: string;
+  firstName: string;
+  lastName: string;
+}
+
+export const Main = ({ users, isLoading, isSuccess }: IMainProps) => {
   const token = localStorage.getItem("token") as string;
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const handleNextUser = () => {
     try {
