@@ -13,6 +13,7 @@ export const SidebarLeft = ({
   isLeft,
 }: ISidebarLeftProps) => {
   const [isAdmin, setIsAdmin] = useState(false);
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
   const toggleSidebarLeft = () => {
@@ -23,22 +24,6 @@ export const SidebarLeft = ({
     localStorage.removeItem("token");
     navigate("/");
   };
-
-  const id = localStorage.getItem("token");
-
-  useEffect(() => {
-    const fetchData = () => {
-      try {
-        adminService.IsAdmin(id).then((response) => {
-          setIsAdmin(response.data);
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const SidebarLeftData: ISidebarLeftData[] = [
     {
@@ -60,14 +45,14 @@ export const SidebarLeft = ({
       url: "./Pictures/Mail.svg",
       href: "https://web.telegram.org/a/#702091274",
       text: "Связаться с нами",
-      handler: () => {},
+      handler: toggleSidebarLeft,
     },
     {
       title: "",
       url: "./Pictures/Vparse.svg",
       href: "",
       text: "ВПарсер v1.0.0",
-      handler: () => {},
+      handler: toggleSidebarLeft,
     },
     //   {
     //     title: "",
@@ -91,6 +76,20 @@ export const SidebarLeft = ({
     //     isAdmin: false,
     //   },
   ];
+
+  useEffect(() => {
+    const fetchData = () => {
+      try {
+        adminService.IsAdmin(token).then((response) => {
+          setIsAdmin(response.data);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div

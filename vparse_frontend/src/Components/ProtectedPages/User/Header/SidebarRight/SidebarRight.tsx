@@ -10,6 +10,8 @@ export const SidebarRight = ({
   handleSidebarRight,
   isRight,
 }: ISidebarRightProps) => {
+  const queryClient = useQueryClient();
+  const token = localStorage.getItem("token");
   const [filterData, setFilterData] = useState<IFilterProps>({
     age_from: "",
     age_to: "",
@@ -26,14 +28,10 @@ export const SidebarRight = ({
   });
 
   const toggleApplyFilters = () => {
-    applyFilters();
+    queryClient.invalidateQueries(["search", token, filterData], {
+      exact: true,
+    });
     handleSidebarRight();
-  };
-
-  const queryClient = useQueryClient();
-
-  const applyFilters = () => {
-    queryClient.invalidateQueries(["search", { ...filterData }]);
   };
 
   const handleFilterChange = (key: string, value: string) => {

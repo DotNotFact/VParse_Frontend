@@ -31,19 +31,19 @@ export default function App() {
     data: users,
     isLoading,
     isSuccess,
-  } = useSearch({
+  } = useSearch(token, {
     age_from: "",
     age_to: "",
-    sex: "",
-    sort: "",
+    sex: "0",
+    sort: "0",
     status: "",
-    has_photo: "",
-    online: "",
-    can_write_private_message: "",
-    can_send_friend_request: "",
-    can_see_all_posts: "",
-    is_friend: "",
-    common_count: "",
+    has_photo: "0",
+    online: "0",
+    can_write_private_message: "0",
+    can_send_friend_request: "0",
+    can_see_all_posts: "0",
+    is_friend: "0",
+    common_count: "0",
   });
 
   if (!token) {
