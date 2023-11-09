@@ -5,8 +5,9 @@ import { useState } from "react";
 import "./Main.css";
 
 interface IMainProps {
-  users: IPersonData[];
+  users: any[];
   isLoading: boolean;
+  isSuccess: boolean;
 }
 
 interface IPersonData {
@@ -16,7 +17,7 @@ interface IPersonData {
   lastName: string;
 }
 
-export const Main = ({ users, isLoading }: IMainProps) => {
+export const Main = ({ users, isLoading, isSuccess }: IMainProps) => {
   const token = localStorage.getItem("token") as string;
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
@@ -46,6 +47,7 @@ export const Main = ({ users, isLoading }: IMainProps) => {
         {isLoading ? (
           <Loader load={isLoading} />
         ) : (
+          isSuccess &&
           users && (
             <>
               <div className="main-top">

@@ -27,7 +27,11 @@ export default function App() {
     }
   }, []);
 
-  const { data: users, isLoading } = useSearch(token, {
+  const {
+    data: users,
+    isLoading,
+    isSuccess,
+  } = useSearch(token, {
     age_from: "",
     age_to: "",
     sex: "0",
@@ -60,7 +64,9 @@ export default function App() {
         <Route index path="/" element={<Navigate to="main" replace />} />
         <Route
           path="main"
-          element={<Main users={users} isLoading={isLoading} />}
+          element={
+            <Main users={users} isLoading={isLoading} isSuccess={isSuccess} />
+          }
         />
         <Route path="bookmark" element={<Bookmark />} />
         <Route path="adddonate" element={<AddDonate />} />
