@@ -1,25 +1,31 @@
-import { Component } from "react";
+import { useEffect, useRef } from "react";
 import "./CopyToClipboard.css";
 
-export class CopyToClipboard extends Component {
-  textArea: any;
+export const CopyToClipboard = () => {
+  const textAreaRef = useRef<HTMLInputElement>(null);
 
-  copyClipBoard() {
-    this.textArea.select();
-    document.execCommand("copy");
-  }
+  useEffect(() => {
+    if (textAreaRef.current) {
+      textAreaRef.current.focus();
+    }
+  }, []);
 
-  render() {
-    return (
-      <div id="CopyToClipboard">
-        <input
-          readOnly
-          value={localStorage.getItem("token") ?? "Попробуй перезайти!"}
-          type="text"
-          ref={(textarea) => (this.textArea = textarea)}
-        />
-        <button onClick={this.copyClipBoard}>Копировать</button>
-      </div>
-    );
-  }
-}
+  const copyClipBoard = () => {
+    if (textAreaRef.current) {
+      textAreaRef.current.select();
+      document.execCommand("copy");
+    }
+  };
+
+  return (
+    <div id="CopyToClipboard">
+      <input
+        readOnly
+        value={localStorage.getItem("token") ?? "Попробуй перезайти!"}
+        type="text"
+        ref={textAreaRef}
+      />
+      <button onClick={copyClipBoard}>Копировать</button>
+    </div>
+  );
+};

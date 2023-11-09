@@ -57,6 +57,8 @@ export default function App() {
     );
   }
 
+  console.log("App.tsx - " + users);
+
   return (
     <>
       <Header />

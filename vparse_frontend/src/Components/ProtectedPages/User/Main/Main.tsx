@@ -41,6 +41,8 @@ export const Main = ({ users, isLoading, isSuccess }: any) => {
     }
   };
 
+  console.log(`Main.tsx - ${users} + ${isLoading} + ${isSuccess}`);
+
   return (
     <div className="main-wrapper">
       <div className="p-1 maxWidth main-container">

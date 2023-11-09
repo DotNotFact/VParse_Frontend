@@ -4,6 +4,9 @@ import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 
 export const useSearch = (token: string, filters: IFilterProps) => {
+  console.log("useSearch.tsx - " + token);
+  console.log("useSearch.tsx - " + filters);
+
   return useQuery(
     ["search", token, filters],
     () => {
