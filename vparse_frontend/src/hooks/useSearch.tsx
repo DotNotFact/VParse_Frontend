@@ -4,25 +4,20 @@ import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 
 export const useSearch = (token: string, filters: IFilterProps) => {
-  console.log("useSearch.tsx - " + token);
-  console.log("useSearch.tsx - " + filters);
-
-  return useQuery(
-    ["search", token, filters],
-    () => {
+  return useQuery({
+    queryKey: ["search", token, filters],
+    queryFn: () => {
       userService.Search(token, filters);
     },
-    {
-      enabled: !!token,
-      select: ({ data }: any) => data.items,
-      onError: (err) => {
-        if (err instanceof Error) {
-          toast.error(err.message, {
-            position: toast.POSITION.TOP_RIGHT,
-          });
-        }
-      },
-      refetchOnWindowFocus: false,
-    }
-  );
+    enabled: !!token,
+    select: ({ data }: any) => data.items,
+    onError: (err) => {
+      if (err instanceof Error) {
+        toast.error(err.message, {
+          position: toast.POSITION.TOP_RIGHT,
+        });
+      }
+    },
+    refetchOnWindowFocus: false,
+  });
 };

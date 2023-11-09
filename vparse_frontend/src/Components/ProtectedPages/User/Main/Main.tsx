@@ -3,6 +3,7 @@ import userService from "../../../../Services/UserService";
 import { Loader } from "../../../CustomUI/Loader/Loader";
 import { useState } from "react";
 import "./Main.css";
+import { useSearch } from "../../../../hooks/useSearch";
 
 interface IMainProps {
   users: any[];
@@ -17,9 +18,28 @@ interface IPersonData {
   lastName: string;
 }
 
-export const Main = ({ users, isLoading, isSuccess }: any) => {
+export const Main = () => {
   const token = localStorage.getItem("token") as string;
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+
+  const {
+    data: users,
+    isLoading,
+    isSuccess,
+  } = useSearch(token, {
+    age_from: "",
+    age_to: "",
+    sex: "0",
+    sort: "0",
+    status: "",
+    has_photo: "0",
+    online: "0",
+    can_write_private_message: "0",
+    can_send_friend_request: "0",
+    can_see_all_posts: "0",
+    is_friend: "0",
+    common_count: "0",
+  });
 
   const handleNextUser = () => {
     try {
@@ -40,8 +60,6 @@ export const Main = ({ users, isLoading, isSuccess }: any) => {
       console.log(e);
     }
   };
-
-  console.log(`Main.tsx - ${users} + ${isLoading} + ${isSuccess}`);
 
   return (
     <div className="main-wrapper">
