@@ -45,9 +45,10 @@ export const Main = ({ users, isLoading, isSuccess }: any) => {
     <div className="main-wrapper">
       <div className="p-1 maxWidth main-container">
         {isLoading ? (
-          <Loader load={isLoading} />
+          <Loader load={true} />
         ) : (
-          isSuccess && (
+          isSuccess &&
+          users.length > 0 && (
             <>
               <div className="main-top">
                 <img
@@ -76,7 +77,7 @@ export const Main = ({ users, isLoading, isSuccess }: any) => {
                 <button onClick={handleNextUser}>
                   <img src="./Pictures/Show.svg" alt="svg" />
                 </button>
-                <a href={"https://vk.com/id" + users[currentIndex].id}>
+                <a href={"https://vk.com/id" + users[currentIndex]?.id}>
                   <img src="./Pictures/Chat.svg" alt="svg" />
                 </a>
                 <button onClick={handleAddBookmark}>
