@@ -1,5 +1,5 @@
 ﻿import { useQueryClient } from "react-query";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import "./SidebarRight.css";
 import {
   IFilterProps,
@@ -12,20 +12,23 @@ export const SidebarRight = ({
 }: ISidebarRightProps) => {
   const queryClient = useQueryClient();
   const token = localStorage.getItem("token");
-  const [filterData, setFilterData] = useState<IFilterProps>({
-    age_from: "",
-    age_to: "",
-    sex: "0",
-    sort: "0",
-    status: "",
-    has_photo: "0",
-    online: "0",
-    can_write_private_message: "0",
-    can_send_friend_request: "0",
-    can_see_all_posts: "0",
-    is_friend: "0",
-    common_count: "0",
-  });
+  const [filterData, dispatchFilterData] = useReducer(
+    (state: any, action: any) => ({ ...state, ...action }),
+    {
+      age_from: "",
+      age_to: "",
+      sex: "0",
+      sort: "0",
+      status: "",
+      has_photo: "0",
+      online: "0",
+      can_write_private_message: "0",
+      can_send_friend_request: "0",
+      can_see_all_posts: "0",
+      is_friend: "0",
+      common_count: "0",
+    }
+  );
 
   const toggleApplyFilters = () => {
     queryClient.invalidateQueries(["search", token, filterData], {
@@ -35,7 +38,7 @@ export const SidebarRight = ({
   };
 
   const handleFilterChange = (key: string, value: string) => {
-    setFilterData((prevData: any) => ({
+    dispatchFilterData((prevData: any) => ({
       ...prevData,
       [key]: value,
     }));

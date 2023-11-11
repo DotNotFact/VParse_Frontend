@@ -110,7 +110,7 @@ export const SidebarLeft = ({
         <div className="sidebarLeft-info">
           {SidebarLeftData.map((item) => {
             return (
-              <>
+              <div key={item.text}>
                 {item.title && <hr />}
 
                 <label
@@ -130,7 +130,7 @@ export const SidebarLeft = ({
                     <p>{item.text}</p>
                   </button>
                 )}
-              </>
+              </div>
             );
           })}
           {isAdmin ?? (

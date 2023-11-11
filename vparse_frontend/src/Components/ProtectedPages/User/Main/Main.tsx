@@ -6,7 +6,7 @@ import "./Main.css";
 import { useSearch } from "../../../../hooks/useSearch";
 
 interface IMainProps {
-  users: any[];
+  users: IPersonData[];
   isLoading: boolean;
   isSuccess: boolean;
 }
@@ -61,51 +61,52 @@ export const Main = () => {
     }
   };
 
+  console.log(isLoading);
+
+  if (isLoading) {
+    return <Loader load={true} />;
+  }
+
   return (
     <div className="main-wrapper">
       <div className="p-1 maxWidth main-container">
-        {isLoading ? (
-          <Loader load={true} />
-        ) : (
-          isSuccess &&
-          users && (
-            <>
-              <div className="main-top">
-                <img
-                  loading="lazy"
-                  src={users[currentIndex]?.imageUrl}
-                  alt="UserPhoto"
-                />
-                <div className="p-1 main-info">
-                  <div className="main-wrap-text main-info-left">
-                    <p>
-                      {users[currentIndex]?.firstName}{" "}
-                      {users[currentIndex]?.lastName}
-                    </p>
-                    {/* <label>{users[currentIndex]?.firstName}</label>*/}
-                  </div>
-                  {/*<div className="main-wrap-text main-info-right">*/}
-                  {/*    <button>*/}
-                  {/*        <BsImages />*/}
-                  {/*        Еще*/}
-                  {/*    </button>*/}
-                  {/*</div>*/}
+        {isSuccess && (
+          <>
+            <div className="main-top">
+              <img
+                loading="lazy"
+                src={users[currentIndex]?.imageUrl}
+                alt="UserPhoto"
+              />
+              <div className="p-1 main-info">
+                <div className="main-wrap-text main-info-left">
+                  <p>
+                    {users[currentIndex]?.firstName}{" "}
+                    {users[currentIndex]?.lastName}
+                  </p>
+                  {/* <label>{users[currentIndex]?.firstName}</label>*/}
                 </div>
+                {/*<div className="main-wrap-text main-info-right">*/}
+                {/*    <button>*/}
+                {/*        <BsImages />*/}
+                {/*        Еще*/}
+                {/*    </button>*/}
+                {/*</div>*/}
               </div>
+            </div>
 
-              <div className="main-bottom">
-                <button onClick={handleNextUser}>
-                  <img src="./Pictures/Show.svg" alt="svg" />
-                </button>
-                <a href={"https://vk.com/id" + users[currentIndex]?.id}>
-                  <img src="./Pictures/Chat.svg" alt="svg" />
-                </a>
-                <button onClick={handleAddBookmark}>
-                  <img src="./Pictures/AddToQueue.svg" alt="svg" />
-                </button>
-              </div>
-            </>
-          )
+            <div className="main-bottom">
+              <button onClick={handleNextUser}>
+                <img src="./Pictures/Show.svg" alt="svg" />
+              </button>
+              <a href={"https://vk.com/id" + users[currentIndex]?.id}>
+                <img src="./Pictures/Chat.svg" alt="svg" />
+              </a>
+              <button onClick={handleAddBookmark}>
+                <img src="./Pictures/AddToQueue.svg" alt="svg" />
+              </button>
+            </div>
+          </>
         )}
       </div>
     </div>

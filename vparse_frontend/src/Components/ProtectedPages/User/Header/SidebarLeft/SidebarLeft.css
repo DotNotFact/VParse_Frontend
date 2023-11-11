@@ -31,19 +31,25 @@
 
 .sidebarLeft-info {
   flex-direction: column;
+  display: flex;
+  gap: 8px;
+}
+
+.sidebarLeft-info > div {
+  flex-direction: column;
   align-items: start;
   display: flex;
   gap: 5px;
 }
 
-.sidebarLeft-info > label {
+.sidebarLeft-info > div > label {
   color: var(--blue-color);
   margin-bottom: 8px;
   font-weight: 600;
 }
 
-.sidebarLeft-info > button,
-.sidebarLeft-info > a {
+.sidebarLeft-info > div > button,
+.sidebarLeft-info > div > a {
   justify-content: flex-start;
   width: 100%;
   gap: 8px;
