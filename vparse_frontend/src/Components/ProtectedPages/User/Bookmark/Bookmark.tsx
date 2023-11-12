@@ -2,41 +2,45 @@ import bookmarkService from "../../../../Services/BookmarkService";
 import { useEffect, useState } from "react";
 import "./Bookmark.css";
 
+interface IBookmarkProps {
+  id: string;
+  imageUrl: string;
+  bookUserId: string;
+}
+
 export const Bookmark = () => {
   const [users, setUsers] = useState([]);
   const [rerender, setRerender] = useState(false);
-  const id = localStorage.getItem("token");
 
   const handleRemoveBookmark = (bookmarkUserId: string) => {
-    try {
-      bookmarkService.removeBookmark(id, bookmarkUserId).then((response) => {
+    bookmarkService
+      .removeBookmark(bookmarkUserId)
+      .then((response) => {
         if (response.status === 200) {
-          setRerender((value: any) => !value);
+          setRerender((value: boolean) => !value);
         }
+      })
+      .catch((error) => {
+        console.error("Ошибка при удалении пользователя из закладок: ", error);
       });
-    } catch (e) {
-      console.log(e);
-    }
   };
 
   useEffect(() => {
-    const fetchData = () => {
-      try {
-        bookmarkService.getAllBookmarks(id).then((response) => {
-          setUsers(response.data);
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
+    bookmarkService
+      .getAllBookmarks()
+      .then((response) => {
+        setUsers(response.data);
+      })
+      .catch((error) => {
+        console.error("Ошибка получения пользователей из закладкок: ", error);
+      });
   }, [rerender]);
 
   return (
     <div className="bookmark-wrapper">
       <div className="maxWidth p-1 bookmark-container">
         {users &&
-          users.map((user: any) => (
+          users.map((user: IBookmarkProps) => (
             <div key={user.id} className="bookmark-user">
               <img src={user.imageUrl} alt="User" />
               <div className="p-1 bookmark-btn">

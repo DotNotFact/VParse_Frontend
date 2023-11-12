@@ -1,28 +1,40 @@
 ﻿import { CopyToClipboard } from "../../../../../Components/CustomUI/CopyToClipboard/CopyToClipboard";
+import vkAuthService from "../../../../../Services/VkAuthService";
 import adminService from "../../../../../Services/AdminService";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   ISidebarLeftData,
   ISidebarLeftProps,
 } from "../../../../../models/IHeader";
 import "./SidebarLeft.css";
+import { AuthContext } from "../../../../../Auth/AuthContext";
 
 export const SidebarLeft = ({
   handleSidebarLeft,
   isLeft,
 }: ISidebarLeftProps) => {
+  const { setIsAuthenticated } = useContext(AuthContext);
   const [isAdmin, setIsAdmin] = useState(false);
-  const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
   const toggleSidebarLeft = () => {
     handleSidebarLeft();
   };
 
-  const handleEmtyToken = () => {
-    localStorage.removeItem("token");
-    navigate("/");
+  const handleLogout = () => {
+    vkAuthService
+      .Logout()
+      .then((response) => {
+        if (response.status === 200) {
+          setIsAuthenticated(false);
+          handleSidebarLeft();
+          navigate("/login");
+        }
+      })
+      .catch((error) => {
+        console.error("Ошибка при выходе из сессии", error);
+      });
   };
 
   const SidebarLeftData: ISidebarLeftData[] = [
@@ -31,7 +43,7 @@ export const SidebarLeft = ({
       url: "./Pictures/Exit.svg",
       href: "",
       text: "Выйти",
-      handler: handleEmtyToken,
+      handler: handleLogout,
     },
     {
       title: "Дополнительно",
@@ -54,41 +66,17 @@ export const SidebarLeft = ({
       text: "ВПарсер v1.0.0",
       handler: toggleSidebarLeft,
     },
-    //   {
-    //     title: "",
-    //     url: "",
-    //     href: "",
-    //     text: "Оценить нас",
-    //     isAdmin: false,
-    //   },
-    //   {
-    //     title: "",
-    //     url: "",
-    //     href: "/policypagetext",
-    //     text: "Пользовательское соглашение",
-    //     isAdmin: false,
-    //   },
-    //   {
-    //     title: "",
-    //     url: "",
-    //     href: "/confidentialitypagetext",
-    //     text: "Политика конфиденциальности",
-    //     isAdmin: false,
-    //   },
   ];
 
   useEffect(() => {
-    const fetchData = () => {
-      try {
-        adminService.IsAdmin(token).then((response) => {
-          setIsAdmin(response.data);
-        });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    fetchData();
+    adminService
+      .IsAdmin()
+      .then((response) => {
+        setIsAdmin(response.data);
+      })
+      .catch((error) => {
+        console.error("Ошибка при проверке на админа: ", error);
+      });
   }, []);
 
   return (
@@ -133,21 +121,21 @@ export const SidebarLeft = ({
               </div>
             );
           })}
-          {isAdmin ?? (
-            <>
+          {isAdmin && (
+            <div>
               <label>Админка</label>
               <Link to="/adddonate" onClick={toggleSidebarLeft}>
                 <img src="./Pictures/Puzzle.svg" alt="svg" />
                 <p>Админ Панель</p>
               </Link>
-            </>
+            </div>
           )}
         </div>
 
-        <div className="sidebarLeft-bottom">
+        {/* <div className="sidebarLeft-bottom">
           <label>Идентификатор пользователя</label>
           <CopyToClipboard />
-        </div>
+        </div> */}
       </div>
     </div>
   );

@@ -6,11 +6,11 @@ export const AddDonate = () => {
   const [vipId, setVipId] = useState("");
   const [role, setRole] = useState("");
 
-  const token = localStorage.getItem("token");
-
   const handleAddDonate = () => {
     try {
-      adminService.AddRole(token, vipId, role);
+      adminService.AddRole(vipId, role).catch((error) => {
+        console.error("(Админ панель) Ошибка при выдаче роли: ", error);
+      });
     } catch (e) {
       console.log(e);
     }

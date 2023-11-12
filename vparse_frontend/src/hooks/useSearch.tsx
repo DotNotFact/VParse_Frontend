@@ -3,18 +3,18 @@ import { IFilterProps } from "../models/IHeader";
 import { toast } from "react-toastify";
 import { useQuery } from "react-query";
 
-export const useSearch = (token: string, filters: IFilterProps) => {
+export const useSearch = (filters: IFilterProps) => {
   return useQuery({
-    queryKey: ["search", token, filters],
+    queryKey: ["search", filters],
     queryFn: async () => {
       try {
-        const result = await userService.Search(token, filters);
+        const result = await userService.Search(filters);
         return result;
       } catch (error) {
         throw new Error("Failed to fetch data");
       }
     },
-    enabled: !!token,
+    enabled: !!filters,
     select: ({ data }: any) => {
       return data.items;
     },

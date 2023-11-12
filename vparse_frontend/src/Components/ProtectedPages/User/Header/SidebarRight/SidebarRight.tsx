@@ -1,47 +1,25 @@
-﻿import { useQueryClient } from "react-query";
-import { useReducer, useState } from "react";
+﻿import { ISidebarRightProps } from "../../../../../models/IHeader";
+import { useQueryClient } from "react-query";
+import { useReducer } from "react";
 import "./SidebarRight.css";
-import {
-  IFilterProps,
-  ISidebarRightProps,
-} from "../../../../../models/IHeader";
+import reducer from "../../../../TestComponent/reducer";
 
 export const SidebarRight = ({
   handleSidebarRight,
   isRight,
 }: ISidebarRightProps) => {
+  const [filter, dispatchFilter] = useReducer(reducer, initialFilter);
   const queryClient = useQueryClient();
-  const token = localStorage.getItem("token");
-  const [filterData, dispatchFilterData] = useReducer(
-    (state: any, action: any) => ({ ...state, ...action }),
-    {
-      age_from: "",
-      age_to: "",
-      sex: "0",
-      sort: "0",
-      status: "",
-      has_photo: "0",
-      online: "0",
-      can_write_private_message: "0",
-      can_send_friend_request: "0",
-      can_see_all_posts: "0",
-      is_friend: "0",
-      common_count: "0",
-    }
-  );
 
   const toggleApplyFilters = () => {
-    queryClient.invalidateQueries(["search", token, filterData], {
+    queryClient.invalidateQueries(["search", filter], {
       exact: true,
     });
     handleSidebarRight();
   };
 
   const handleFilterChange = (key: string, value: string) => {
-    dispatchFilterData((prevData: any) => ({
-      ...prevData,
-      [key]: value,
-    }));
+    dispatchFilter({ type: "edit", key, value });
   };
 
   return (
@@ -72,7 +50,7 @@ export const SidebarRight = ({
               <input
                 type="number"
                 inputMode="numeric"
-                value={filterData.age_from}
+                value={filter.age_from}
                 onChange={(e) => {
                   if (e.target.value.length < 3) {
                     handleFilterChange("age_from", e.target.value);
@@ -87,7 +65,7 @@ export const SidebarRight = ({
               <input
                 type="number"
                 inputMode="numeric"
-                value={filterData.age_to}
+                value={filter.age_to}
                 onChange={(e) => {
                   if (e.target.value.length < 3) {
                     handleFilterChange("age_to", e.target.value);
@@ -103,7 +81,7 @@ export const SidebarRight = ({
             <p>Сортировка по</p>
 
             <select
-              value={filterData.sort}
+              value={filter.sort}
               onChange={(e) => handleFilterChange("sort", e.target.value)}
             >
               <option value="0">Популярности</option>
@@ -115,7 +93,7 @@ export const SidebarRight = ({
             <p>Пол</p>
 
             <select
-              value={filterData.sex}
+              value={filter.sex}
               onChange={(e) => handleFilterChange("sex", e.target.value)}
             >
               <option value="0">Любой</option>
@@ -149,7 +127,7 @@ export const SidebarRight = ({
             <p>Семейное положение</p>
 
             <select
-              value={filterData.status}
+              value={filter.status}
               onChange={(e) => handleFilterChange("status", e.target.value)}
             >
               <option value="" defaultValue="не выбрано" disabled hidden>
@@ -176,7 +154,7 @@ export const SidebarRight = ({
             <p>Только с фото</p>
 
             <input
-              value={filterData.has_photo}
+              value={filter.has_photo}
               onChange={(e) =>
                 handleFilterChange("has_photo", e.target.checked ? "1" : "0")
               }
@@ -188,7 +166,7 @@ export const SidebarRight = ({
             <p>Онлайн</p>
 
             <input
-              value={filterData.online}
+              value={filter.online}
               onChange={(e) =>
                 handleFilterChange("online", e.target.checked ? "1" : "0")
               }
@@ -200,7 +178,7 @@ export const SidebarRight = ({
             <p>Открытые сообщения</p>
             <input
               type="checkbox"
-              value={filterData.can_write_private_message}
+              value={filter.can_write_private_message}
               onChange={(e) =>
                 handleFilterChange(
                   "can_write_private_message",
@@ -214,7 +192,7 @@ export const SidebarRight = ({
             <p>Возможность добавить в друзья</p>
             <input
               type="checkbox"
-              value={filterData.can_send_friend_request}
+              value={filter.can_send_friend_request}
               onChange={(e) =>
                 handleFilterChange(
                   "can_send_friend_request",
@@ -228,7 +206,7 @@ export const SidebarRight = ({
             <p>Возможность видеть ваши посты</p>
             <input
               type="checkbox"
-              value={filterData.can_see_all_posts}
+              value={filter.can_see_all_posts}
               onChange={(e) =>
                 handleFilterChange(
                   "can_see_all_posts",
@@ -248,7 +226,7 @@ export const SidebarRight = ({
             <p>Является другом</p>
             <input
               type="checkbox"
-              value={filterData.is_friend}
+              value={filter.is_friend}
               onChange={(e) =>
                 handleFilterChange("is_friend", e.target.checked ? "1" : "0")
               }
@@ -259,7 +237,7 @@ export const SidebarRight = ({
             <p>Общие друзья</p>
             <input
               type="checkbox"
-              value={filterData.is_friend}
+              value={filter.is_friend}
               onChange={(e) =>
                 handleFilterChange("is_friend", e.target.checked ? "1" : "0")
               }
@@ -276,4 +254,19 @@ export const SidebarRight = ({
       </div>
     </div>
   );
+};
+
+const initialFilter = {
+  age_from: "",
+  age_to: "",
+  sex: "0",
+  sort: "0",
+  status: "",
+  has_photo: "0",
+  online: "0",
+  can_write_private_message: "0",
+  can_send_friend_request: "0",
+  can_see_all_posts: "0",
+  is_friend: "0",
+  common_count: "0",
 };

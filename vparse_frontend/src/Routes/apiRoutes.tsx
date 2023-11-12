@@ -14,4 +14,9 @@ export const ApiRoutes = {
     ADD_BOOKMARK: "/Bookmark/AddBookmarkAsync",
     REMOVE_BOOKMARK: "/Bookmark/RemoveBookmarkAsync",
   },
+
+  VkAuth: {
+    CheckSession: "VkAuth/CheckSession",
+    Logout: "VkAuth/Logout",
+  },
 };

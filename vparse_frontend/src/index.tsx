@@ -12,15 +12,16 @@ const root = ReactDOM.createRoot(
 
 const queryClient = new QueryClient();
 
-// StrictMode - 2 запроса и нужно отключить его?
+{
+  /* <React.StrictMode>
+  </React.StrictMode> */
+}
 root.render(
-  <React.StrictMode>
+  <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
+      <App />
     </BrowserRouter>
-  </React.StrictMode>
+  </QueryClientProvider>
 );
 
 reportWebVitals();

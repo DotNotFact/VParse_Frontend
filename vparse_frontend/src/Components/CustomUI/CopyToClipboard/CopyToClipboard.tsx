@@ -21,7 +21,7 @@ export const CopyToClipboard = () => {
     <div id="CopyToClipboard">
       <input
         readOnly
-        value={localStorage.getItem("token") ?? "Попробуй перезайти!"}
+        value={"В ближайшем обновлении :з"}
         type="text"
         ref={textAreaRef}
       />

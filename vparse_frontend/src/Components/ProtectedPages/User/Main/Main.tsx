@@ -19,14 +19,13 @@ interface IPersonData {
 }
 
 export const Main = () => {
-  const token = localStorage.getItem("token") as string;
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const {
     data: users,
     isLoading,
     isSuccess,
-  } = useSearch(token, {
+  } = useSearch({
     age_from: "",
     age_to: "",
     sex: "0",
@@ -43,7 +42,7 @@ export const Main = () => {
 
   const handleNextUser = () => {
     try {
-      userService.AddSwipe(token);
+      userService.AddSwipe();
       if (users.length > 0) {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % users.length);
       }
@@ -53,15 +52,17 @@ export const Main = () => {
   };
 
   const handleAddBookmark = () => {
-    try {
-      const imageUrl = encodeURIComponent(users[currentIndex].imageUrl);
-      bookmarkService.addBookmark(token, users[currentIndex].id, imageUrl);
-    } catch (e) {
-      console.log(e);
-    }
+    const imageUrl = encodeURIComponent(users[currentIndex].imageUrl);
+    bookmarkService
+      .addBookmark(users[currentIndex].id, imageUrl)
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          console.error("Ошибка добавления пользователя в бд: ", error);
+        } else {
+          console.error("Другая ошибка бд: ", error);
+        }
+      });
   };
-
-  console.log(isLoading);
 
   if (isLoading) {
     return <Loader load={true} />;
