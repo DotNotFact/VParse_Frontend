@@ -1,15 +1,24 @@
-﻿import { ISidebarRightProps } from "../../../../../models/IHeader";
+﻿import {
+  IFilterProps,
+  ISidebarRightProps,
+} from "../../../../../models/IHeader";
 import { useQueryClient } from "react-query";
-import { useReducer } from "react";
+import { useContext, useReducer } from "react";
 import "./SidebarRight.css";
 import reducer from "../../../../TestComponent/reducer";
+import FilterContext from "../../../../TestComponent/FilterContext";
 
 export const SidebarRight = ({
   handleSidebarRight,
   isRight,
 }: ISidebarRightProps) => {
-  const [filter, dispatchFilter] = useReducer(reducer, initialFilter);
   const queryClient = useQueryClient();
+  const { filter, setFilter } = useContext(FilterContext);
+
+  const handleFilterChange = (key: string, value: string) => {
+    const newFilter: IFilterProps = { ...filter, [key]: value };
+    setFilter(newFilter);
+  };
 
   const toggleApplyFilters = () => {
     queryClient.invalidateQueries(["search", filter], {
@@ -18,9 +27,18 @@ export const SidebarRight = ({
     handleSidebarRight();
   };
 
-  const handleFilterChange = (key: string, value: string) => {
-    dispatchFilter({ type: "edit", key, value });
-  };
+  // const [filter, dispatchFilter] = useReducer(reducer, initialFilter);
+
+  // const toggleApplyFilters = () => {
+  //   queryClient.invalidateQueries(["search", filter], {
+  //     exact: true,
+  //   });
+  //   handleSidebarRight();
+  // };
+
+  // const handleFilterChange = (key: string, value: string) => {
+  //   dispatchFilter({ type: "edit", key, value });
+  // };
 
   return (
     <div

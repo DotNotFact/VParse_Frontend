@@ -1,7 +1,7 @@
 ﻿.sidebarRight-wrapper {
   transition: all 0.2s ease-in;
   position: absolute;
-  height: 100vh;
+  height: 100%;
   z-index: -1;
   opacity: 0;
   right: 0;

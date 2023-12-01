@@ -1,9 +1,10 @@
 import bookmarkService from "../../../../Services/BookmarkService";
 import userService from "../../../../Services/UserService";
 import { Loader } from "../../../CustomUI/Loader/Loader";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Main.css";
 import { useSearch } from "../../../../hooks/useSearch";
+import FilterContext from "../../../TestComponent/FilterContext";
 
 interface IMainProps {
   users: IPersonData[];
@@ -21,24 +22,16 @@ interface IPersonData {
 export const Main = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
-  const {
-    data: users,
-    isLoading,
-    isSuccess,
-  } = useSearch({
-    age_from: "",
-    age_to: "",
-    sex: "0",
-    sort: "0",
-    status: "",
-    has_photo: "0",
-    online: "0",
-    can_write_private_message: "0",
-    can_send_friend_request: "0",
-    can_see_all_posts: "0",
-    is_friend: "0",
-    common_count: "0",
-  });
+  const { filter } = useContext(FilterContext);
+  const [users, setUsers] = useState<IPersonData[]>([]); // Состояние для пользователей
+
+  const { data, isLoading, isSuccess } = useSearch(filter);
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      setUsers(data); // Обновление состояния пользователей
+    }
+  }, [data, isSuccess]); // Зависимости useEffect
 
   const handleNextUser = () => {
     try {
